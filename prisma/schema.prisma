@@ -1,9 +1,6 @@
 // This is your Prisma schema file,
 // learn more about it in the docs: https://pris.ly/d/prisma-schema
 
-// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
-// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
-
 generator client {
   provider = "prisma-client-js"
 }
@@ -14,77 +11,17 @@ datasource db {
   directUrl = env("DIRECT_URL")
 }
 
-enum ChannelType {
-  EMAIL
-  SMS
-}
-
-model Customer {
-  id                  String         @id @default(uuid())
-  fName               String
-  lName               String
-  email               String
-  emailValidated      Boolean
-  requireReLogin      Boolean?
-  failedLoginAttempts Int?
-  cannotLoginUntil    DateTime?
-  active              Boolean
-  deleted             Boolean        @default(false)
-  createdAt           DateTime       @default(now())
-  updatedAt           DateTime       @updatedAt
-  // Relations
-  organizations       Organization[]
-}
-
-model Organization {
-  id         String    @id @default(uuid())
-  customerId String?
-  // Relations
-  customer   Customer? @relation(fields: [customerId], references: [id])
-  accounts   Account[]
-  users      User[]
-}
-
-model Account {
-  id                 String       @id @default(uuid())
-  organizationId     String
-  authPrimaryToken   String       @db.VarChar(255)
-  authSecondaryToken String?      @db.VarChar(255) // will be used for key rotation
-  // Relations
-  Organization       Organization @relation(fields: [organizationId], references: [id])
-}
-
 model User {
-  id             String       @id @default(uuid())
-  organizationId String
-  fName          String
-  lName          String
-  role           String
-  // Relations
-  Organization   Organization @relation(fields: [organizationId], references: [id])
+  id           Int      @id @default(autoincrement())
+  surfaceTagId String   @unique
+  createdAt    DateTime @default(now())
 }
 
-model VerifyServices {
-  id                  Int                   @id @default(autoincrement())
-  sid                 String                @db.VarChar(255)
-  name                String
-  channel             ChannelType           @default(EMAIL)
-  notes               String?
-  createdAt           DateTime              @default(now())
-  updatedAt           DateTime              @updatedAt
-  // Relations
-  verifyServicesUsage VerifyServicesUsage[]
-}
-
-model VerifyServicesUsage {
-  id               Int            @id @default(autoincrement())
-  verifyServicesId Int
-  emailToVerify    String
-  otp              String         @db.VarChar(10)
-  generatedOn      DateTime
-  expireIn         Int
-  verified         Boolean
-  cost             Decimal
-  // Relations
-  VerifyServices   VerifyServices @relation(fields: [verifyServicesId], references: [id])
+model Event {
+  id           Int      @id @default(autoincrement())
+  name         String
+  metadata     Json
+  surfaceTagId String
+  visitorId    String   @default("")
+  createdAt    DateTime @default(now())
 }
