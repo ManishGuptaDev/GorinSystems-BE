@@ -16,10 +16,14 @@ class HighlightService {
         }
     }
 
-    async post(data: Highlight): Promise<Highlight> {
+    async post(text: string, order: number): Promise<Highlight> {
         try {
             const item = await prisma.highlight.create({
-                data
+                data : {
+                    text,
+                    order,
+                    isDeleted: false
+                }
             });
             return item;
         } catch (error) {

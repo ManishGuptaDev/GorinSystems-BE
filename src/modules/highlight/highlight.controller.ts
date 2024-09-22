@@ -17,4 +17,14 @@ export default class HighlightController extends Api {
       next(error)
     }
   };  
+
+  public create = async (req: Request, res: HightlightResponse<Highlight>, next: NextFunction) => {
+    try {
+      const { text, order } = req.body;
+      const item = await this.highlightService.post(text, order);
+      this.send(res, item, httpStatus.OK, true, "item created successfully");
+    } catch (error) {
+      next(error)
+    }
+  };
 }

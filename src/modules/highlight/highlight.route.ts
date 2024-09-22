@@ -18,8 +18,16 @@ highlight.get("/", swaggerMiddleware, async (req, res, next) => {
 });
 
 
-highlight.post("/", swaggerMiddleware, async (req: Request, res: Response) => {
-  return res.status(200).json({ message: "Not Implemented" });
+highlight.post("/", swaggerMiddleware, async (req: Request, res: Response, next) => {
+  const { text, order } = req.body;
+  // Validate input
+  if (!text || typeof text !== "string") {
+    return res.status(400).json({ message: "Text is required and must be a string." });
+  }
+  if (order === undefined || typeof order !== "number") {
+    return res.status(400).json({ message: "Order is required and must be a number." });
+  }
+  return controller.create(req, res, next);
 });
 
 
