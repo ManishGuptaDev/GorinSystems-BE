@@ -2,6 +2,7 @@ import express, { Application } from "express";
 import morgan from "morgan";
 import swaggerUi from "swagger-ui-express";
 import httpStatus from 'http-status';
+const cors = require('cors');
 
 import routes from "./routes";
 import swaggerDocument from "./lib/swagger/swagger.json";
@@ -17,6 +18,7 @@ const PORT = process.env.PORT || 8000;
 const app: Application = express();
 
 /** Middlewares */
+app.use(cors({ origin: '*' }));
 app.use(express.json()); // built-in middleware to parse the request body
 app.use(morgan("tiny")); // used to log the HTTP requests
 app.use(express.static("public")); // used to serve the static files
