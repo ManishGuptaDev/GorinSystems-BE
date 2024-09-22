@@ -25,3 +25,10 @@ model Event {
   visitorId    String   @default("")
   createdAt    DateTime @default(now())
 }
+
+model Highlight {
+  id        Int     @id @default(autoincrement())
+  text      String
+  order     Int
+  isDeleted Boolean
+}

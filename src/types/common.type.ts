@@ -83,6 +83,6 @@ type Send<ResBody = any, T = Response<ResBody>> = (body?: {
   data: ResBody;
 }) => T;
 
-export interface CategoryResponse<T> extends Response {
+export interface HightlightResponse<T> extends Response {
   json: Send<T, this>;
 }

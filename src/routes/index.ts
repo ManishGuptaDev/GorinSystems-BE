@@ -2,7 +2,7 @@ import { Router, Request, Response } from "express";
 
 const router = Router();
 
-// import categoryController from "../modules/category/category.route";
+import highlightRoute from "../modules/highlight/highlight.route";
 
 router.get("/health", (req: Request, res: Response) => {
   // #swagger.tags = ['Health']
@@ -22,6 +22,6 @@ router.get("/v1/helloWorld", async (req: Request, res: Response) => {
   });
 });
 
-// router.use("/v1/categories", categoryController);
+router.use("/v1/highlight", highlightRoute);
 
 export default router;

@@ -13,6 +13,13 @@ export type Event = {
   createdAt: Date;
 };
 
+export type Highlight = {
+  id: number;
+  text: string;
+  order: number;
+  isDeleted: boolean;
+};
+
 export type VariantType = {
   attributes: {
     productAttributeId: number;
