@@ -39,4 +39,14 @@ export default class HighlightController extends Api {
     }
   };
 
+  public delete = async (req: Request, res: HightlightResponse<Highlight>, next: NextFunction) => {
+    try {
+      const { id } = req.params;
+      const item = await this.highlightService.deleteById(parseInt(id));
+      this.send(res, item, httpStatus.OK, true, "item deleted successfully");
+    } catch (error) {
+      next(error)
+    }
+  };
+
 }

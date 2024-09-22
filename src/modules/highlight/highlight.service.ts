@@ -8,7 +8,11 @@ class HighlightService {
 
     async getAll(): Promise<Highlight[]> {
         try {
-            const items = await prisma.highlight.findMany();
+            const items = await prisma.highlight.findMany({
+                where: {
+                    isDeleted: false, // Only retrieve highlights that are not deleted
+                },
+            });
             return items;
         } catch (error) {
             console.error("Error retrieving items:", error);

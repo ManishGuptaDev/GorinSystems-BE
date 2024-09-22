@@ -31,13 +31,12 @@ highlight.post("/", swaggerMiddleware, async (req: Request, res: Response, next)
 });
 
 highlight.put("/:id", swaggerMiddleware, async (req: Request, res: Response, next) => {
-  console.log("222")
   return controller.update(req, res, next);
 });
 
 
-highlight.delete("/{id}", swaggerMiddleware, async (req: Request, res: Response) => {
-  return res.status(200).json({ message: "Not Implemented" });
+highlight.delete("/:id", swaggerMiddleware, async (req: Request, res: Response, next) => {
+  return controller.delete(req, res, next);
 });
 
 export default highlight;
