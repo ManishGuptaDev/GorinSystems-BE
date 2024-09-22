@@ -27,4 +27,16 @@ export default class HighlightController extends Api {
       next(error)
     }
   };
+
+  public update = async (req: Request, res: HightlightResponse<Highlight>, next: NextFunction) => {
+    try {
+      const { id } = req.params;
+      const { text, order } = req.body;
+      const item = await this.highlightService.updateById(parseInt(id), text, order);
+      this.send(res, item, httpStatus.OK, true, "item updated successfully");
+    } catch (error) {
+      next(error)
+    }
+  };
+
 }

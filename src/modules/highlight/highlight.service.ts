@@ -49,6 +49,24 @@ class HighlightService {
         }
     }
 
+    async updateById(id: number, text: string, order: number): Promise<Highlight> {
+        try {
+            const item = await prisma.highlight.update({
+                where: {
+                    id
+                },
+                data: {
+                    text,
+                    order
+                }
+            });
+            return item;
+        } catch (error) {
+            console.error("Error updating item:", error);
+            throw new Error("Could not update item");
+        }
+    }
+
 
 }
 
